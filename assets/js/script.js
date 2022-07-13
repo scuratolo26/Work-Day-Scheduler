@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    load();
+});
+
 // DISPLAY CURRENT DATE
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -11,9 +15,9 @@ currentDayEl.textContent = today;
 // END DISPLAY CURRENT DATE
 
 // CHECK TIME AND SET BACKGROUND COLOR
-var checkTime = function () {
+var checkCurrentTime = function () {
 
-    var currentTime = moment().format('HH');
+    var timeNow = moment().format('HH');
     var timeBlocks = $(".textArea");
 
     for (var i = 0; i < timeBlocks.length; i++) {
@@ -24,9 +28,9 @@ var checkTime = function () {
 
         $(timeBlocks[i].id).removeClass(".present .past .future");
 
-        if (getElementID < currentTime) {
+        if (getElementID < timeNow) {
             $(changeID).addClass("past");
-        } else if (getElementID > currentTime) {
+        } else if (getElementID > timeNow) {
             $(changeID).addClass("future");
         } else {
             $(changeID).addClass("present");
@@ -34,6 +38,20 @@ var checkTime = function () {
     }
 }
 
-setInterval(checkTime(), (1000 * 60) * 5);
+setInterval(checkCurrentTime(), (1000 * 60) * 5);
 
 // END CHECK TIME 
+
+// SAVE TASKS
+
+function save(id, data) {
+    localStorage.setItem(id, data);
+};
+
+function load() {
+    var ids = ["09", "10", "11", "12", "13", "14", "15", "16", "17"];
+    $.each(ids, function (k, v) {
+        var temp = localStorage.getItem(v);
+        $('#' + v).val(temp);
+    });
+};
