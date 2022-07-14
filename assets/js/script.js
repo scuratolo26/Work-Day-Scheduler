@@ -55,3 +55,9 @@ function load() {
         $('#' + v).val(temp);
     });
 };
+
+// DELETE ALL EVENTS
+function del() {
+    localStorage.clear();
+    location.reload();
+};
